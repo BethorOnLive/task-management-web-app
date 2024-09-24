@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Task Management Web App</title>
+</head>
+<body>
+    <a href="#" class="light" id="btn-theme"></a>
+    <div class="container">
+        <h2>Task Management Web App</h2>
+        <form action="submit">
+            <div class="row-form">
+                <label for="inputTask">Task name</label>
+                <input type="text" name="newTask" placeholder="Write the best tittle for this task" id="inputTask">
+            </div>
+            <button type="submit" class="add-task">Add Task</button>
+        </form>
+        <section class="content-tasks">
+            <h4>Today tasks</h4>
+            <ul class="content-task">
+                <li class="li-tittle">
+                    Task Content
+                    <div class="content-actions">
+                        <span href="#" class="edit-task fa-regular fa-pen-to-square"></span>
+                        <span href="#" class="del-task fa-regular fa-trash-can"></span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <script src="./scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/f178b1bb03.js" crossorigin="anonymous"></script>
+</body>
+</html>
