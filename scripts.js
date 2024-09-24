@@ -38,11 +38,11 @@ function addTask(newText, isRenderOfLS){
     //--Se clona el elemento li, se suma 1 a child, y se agrega como texto el valor recuperado del input
     const clnTask = orgTask.cloneNode(true);
     child++;
-    console.log(newText);
+    //console.log(newText);
     clnTask.textContent = newText;
     if(!isRenderOfLS){//Si es false significa que es una nueva tarea y debe cargarse a localStorage, de lo contraio debe saltar a la siguiente instruccion
         taskInLocalStorage(newText)
-        console.log(isRenderOfLS);
+        //console.log(isRenderOfLS);
     }
     document.getElementById("inputTask").value = ''; //resetea el valor del input
     //--Se crea las instancias de los clones de los botones
@@ -62,7 +62,7 @@ function addTask(newText, isRenderOfLS){
 
     } catch (error) {
          //--Si ocurre una excepción, se ejecuta este bloque
-        console.log("Ocurrió un error:", error.message);
+        //console.log("Ocurrió un error:", error.message);
     }
 }
 
@@ -72,37 +72,37 @@ function addTask(newText, isRenderOfLS){
 ulContainer.addEventListener('click', (event) =>{
     //--Se usa el event.target para identificar la clase del botón que se ha accionado
     if(event.target.classList.contains("del-task")){
-        console.log("remove");
+        //console.log("remove");
         const arrayLi = document.querySelectorAll("li");
 
         /***Con esta linea podemos saber el indice del elemento li donde se va a hacer la eliminación***/
         const index = Array.from(arrayLi).indexOf(event.target.closest("li"));
-        console.log(`Has clickeado el elemento con índice: ${index}`);
+        //console.log(`Has clickeado el elemento con índice: ${index}`);
         
-        const parentElement = event.target.parentElement;
+        const closestLi = event.target.closest("li");
         
         //--La condición no permite eliminar la primer tarea que es la que está seteada por defecto
         if(child == 0){
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No puedes eliminar la tarea de ejemplo",
+                text: "You cannot delete the sample task",
               });
         }
         if (child > 0) {
             Swal.fire({
-                title: "¿Estás seguro que quieres eliminar la tarea?",
+                title: "Are you sure you want to delete the task?",
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Sí, eliminar!"
+                confirmButtonText: "Yes, delete!"
               }).then((result) => {
                 if (result.isConfirmed) {
-                parentElement.remove(); // Elimina el <li> más cercano
+                closestLi.remove(); // Elimina el <li> más cercano
                 removeLocalSg(index);
                   Swal.fire({
-                    title: "Eliminada!",
-                    text: "La tarea ha sido eliminada.",
+                    title: "It's been deleted!",
+                    text: "The task has been deleted.",
                     icon: "success"
                   });
                   child--;
@@ -114,25 +114,25 @@ ulContainer.addEventListener('click', (event) =>{
         const closestLi = event.target.closest("li");
         /***Con esta linea podemos saber el indice del elemento li donde se va a hacer la edicion***/
         const index = Array.from(arrayLi).indexOf(event.target.closest("li"));
-        console.log(`Has clickeado el elemento con índice: ${index}`);
+        //console.log(`Has clickeado el elemento con índice: ${index}`);
         
         Swal.fire({
-            title: "Modifica la tarea",
+            title: "Modify the task.",
             input: "text",
             inputValue: closestLi.firstChild.textContent,
-            inputPlaceholder: "Escribe aqui",
+            inputPlaceholder: "Write here",
             confirmButtonText: "Save",
             showCancelButton: true,
         }).then((result) => {
             const inputValue = result.value;
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-              Swal.fire("Guardado!", "", "success");
-              console.log(inputValue);
+              Swal.fire("Saved!", "", "success");
+              //console.log(inputValue);
               editLocalSg(index,inputValue);
               closestLi.firstChild.textContent = inputValue;
             } else if (result.isDenied) {
-              Swal.fire("Cambios no guardados", "", "info");
+              Swal.fire("Changes not saved", "", "info");
             }
         });
     }    
@@ -150,10 +150,10 @@ function taskInLocalStorage(task){
 /*---------------------------------Funcíón que toma la información del localStorage para renderizarla en el navegador------------------*/
 
 function renderLocalSg(){
-    const elements = JSON.parse(localStorage.getItem("tasks"));
-    console.log(elements);
+    const elements = JSON.parse(localStorage.getItem("tasks")) || [];
+    //console.log(elements);
     const numOfElements = elements.length;
-    console.log(numOfElements);
+    //console.log(numOfElements);
     elements.forEach(item => {
         console.log(item);
         addTask(item, true);//El segundo parametro es para indicar que no es una nueva tarea, ya se encuentra en localStorage y solo se va a renderizar
@@ -164,28 +164,28 @@ renderLocalSg();
 /*---------------------------------Funcíón para eliminar un registro ondemand del localStorage------------------*/
 
 function removeLocalSg(element){
-    console.log("removeLocalSg");
+    //console.log("removeLocalSg");
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
     tasks.splice((element-1),1);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     const elements = JSON.parse(localStorage.getItem("tasks"));
-    console.log(elements);
+    //console.log(elements);
 }
 
 /*---------------------------------Funcíón para editar un registro ondemand del localStorage------------------*/
 
 function editLocalSg(element, newValue){
-    console.log("editLocalSg");
+    //console.log("editLocalSg");
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
     tasks.splice((element-1),1,newValue);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     const elements = JSON.parse(localStorage.getItem("tasks"));
-    console.log(elements);
+    //console.log(elements);
 }
 
 const themeToggleButton = document.getElementById("btn-theme");
 let currentTheme = localStorage.getItem("theme"); //se crea una instancia en localStorage y se le asigna un id
-console.log("currentTheme " + currentTheme);
+//console.log("currentTheme " + currentTheme);
 
 /*----------------------------------------------------Dark mode--------------------------------------------------------------*/
 
@@ -199,21 +199,21 @@ themeToggleButton.addEventListener('click', () =>{
     body.classList.toggle("dark-body");
     card.classList.toggle("dark-card");
     arrayLi.forEach(item => {
-        console.log(item);
+        //console.log(item);
         item.classList.toggle("dark-li");
     });
     const theme = themeToggleButton.classList.contains("dark") ? "dark" : "light";
     localStorage.setItem("theme",theme);
-    console.log("theme " + theme);
+    //console.log("theme " + theme);
 });
 
 if(currentTheme === "dark"){
-    console.log("condicion entra");
+    //console.log("condicion entra");
     themeToggleButton.classList.add("dark");
     document.querySelector("body").classList.add("dark-body");
     document.querySelector("div").classList.toggle("dark-card");
     document.querySelectorAll("li").forEach(item => {
-        console.log(item);
+        //console.log(item);
         item.classList.add("dark-li");
     });
 }
